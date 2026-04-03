@@ -29,3 +29,28 @@ exports.deleteEmployee = async (req, res) => {
   await Employee.findByIdAndDelete(req.params.id);
   res.json({ message: "Employee deleted successfully" });
 };
+
+//reset password
+exports.resetPassword = async (req, res) => {
+
+  try {
+
+    const { email, password } = req.body;
+
+    const user = await Employee.findOneAndUpdate(
+      { email: email },
+      { password: password },
+      { new: true }
+    );
+
+    if (!user) {
+      return res.status(404).json({ message: "Email not found" });
+    }
+
+    res.json({ message: "Password updated successfully" });
+
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+
+};
