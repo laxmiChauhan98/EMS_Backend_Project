@@ -1,4 +1,5 @@
 const Employee = require("../models/Employee");
+const bcrypt = require("bcrypt");
 
 // GET all employees
 exports.getEmployees = async (req, res) => {
@@ -7,10 +8,38 @@ exports.getEmployees = async (req, res) => {
 };
 
 // POST new employee
+// exports.createEmployee = async (req, res) => {
+//   const employee = new Employee(req.body);
+//   const savedEmployee = await employee.save();
+//   res.status(201).json(savedEmployee);
+// };
 exports.createEmployee = async (req, res) => {
-  const employee = new Employee(req.body);
-  const savedEmployee = await employee.save();
-  res.status(201).json(savedEmployee);
+
+try{
+
+const { name, email, password, department, salary } = req.body;
+
+// hash password
+const hashedPassword = await bcrypt.hash(password, 10);
+
+const employee = new Employee({
+name,
+email,
+password: hashedPassword,
+department,
+salary
+});
+
+const savedEmployee = await employee.save();
+
+res.status(201).json(savedEmployee);
+
+}catch(error){
+
+res.status(500).json({message:error.message});
+
+}
+
 };
 
 //reset password
