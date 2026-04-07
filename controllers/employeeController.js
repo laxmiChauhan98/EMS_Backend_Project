@@ -76,32 +76,32 @@ res.status(500).json({message:error.message});
 };
 
 //reset password
-exports.resetPassword = async (req, res) => {
+  exports.resetPassword = async (req, res) => {
 
-  try {
+    try {
 
-    const { email, password } = req.body;
+      const { email, password } = req.body;
 
-    // hash new password
-    const hashedPassword = await bcrypt.hash(password,10);
+      // hash new password
+      const hashedPassword = await bcrypt.hash(password,10);
 
-    const user = await Employee.findOneAndUpdate(
-      { email: email },
-      { password: password },
-      { new: true }
-    );
+      const user = await Employee.findOneAndUpdate(
+        { email: email },
+        { password: hashedPassword },
+        { new: true }
+      );
 
-    if (!user) {
-      return res.status(404).json({ message: "Email not found" });
+      if (!user) {
+        return res.status(404).json({ message: "Email not found" });
+      }
+
+      res.json({ message: "Password updated successfully" });
+
+    } catch (error) {
+      res.status(500).json({ message: error.message });
     }
 
-    res.json({ message: "Password updated successfully" });
-
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-
-};
+  };
 // UPDATE employee
 exports.updateEmployee = async (req, res) => {
   const updatedEmployee = await Employee.findByIdAndUpdate(
