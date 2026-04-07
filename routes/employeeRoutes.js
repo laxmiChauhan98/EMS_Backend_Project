@@ -12,7 +12,7 @@ const {
 } = require("../controllers/employeeController");
 
 router.get("/", getEmployees);
-router.post("/login", employeeController.loginEmployee);
+router.post("/login", loginEmployee);
 router.post("/", createEmployee);
 router.put("/reset-password", resetPassword);
 router.put("/:id", updateEmployee);
