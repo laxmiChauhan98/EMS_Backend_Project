@@ -41,6 +41,39 @@ res.status(500).json({message:error.message});
 }
 
 };
+//endpoint for employee login(hashed password)
+exports.loginEmployee = async (req, res) => {
+
+try {
+
+const { email, password } = req.body;
+
+// find employee by email
+const employee = await Employee.findOne({ email });
+
+if (!employee) {
+return res.status(404).json({ message: "Email not found" });
+}
+
+// compare entered password with hashed password
+const isMatch = await bcrypt.compare(password, employee.password);
+
+if (!isMatch) {
+return res.status(401).json({ message: "Invalid password" });
+}
+
+res.json({
+message: "Login successful",
+employee
+});
+
+} catch (error) {
+
+res.status(500).json({ message: error.message });
+
+}
+
+};
 
 //reset password
 exports.resetPassword = async (req, res) => {

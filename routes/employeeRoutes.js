@@ -6,7 +6,8 @@ const {
   createEmployee,
   resetPassword,
   updateEmployee,
-  deleteEmployee
+  deleteEmployee,
+  loginEmployee
   
 } = require("../controllers/employeeController");
 
@@ -15,6 +16,8 @@ router.post("/", createEmployee);
 router.put("/reset-password", resetPassword);
 router.put("/:id", updateEmployee);
 router.delete("/:id", deleteEmployee);
+router.post("/login", employeeController.loginEmployee);
+
 
 
 module.exports = router;
