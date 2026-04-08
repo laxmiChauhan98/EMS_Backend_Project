@@ -28,7 +28,7 @@ return res.status(401).json({ message: "Invalid password" });
 // Generate JWT token
 const token = jwt.sign(
 { id: employee._id },
-"secretkey",
+process.env.JWT_SECRET,
 { expiresIn: "1h" }
 );
 res.json({
