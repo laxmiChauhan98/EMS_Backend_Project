@@ -33,6 +33,7 @@ const token = jwt.sign(
 );
 res.json({
 message: "Login successful",
+token: token,
 employee
 });
 
