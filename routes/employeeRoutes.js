@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const { verifyToken } = require("../middleware/authMiddleware");
 
 const {
   getEmployees,
@@ -11,7 +12,8 @@ const {
   
 } = require("../controllers/employeeController");
 
-router.get("/", getEmployees);
+// router.get("/", getEmployees);
+router.get("/", verifyToken, getEmployees);
 router.post("/login", loginEmployee);
 router.post("/", createEmployee);
 router.put("/reset-password", resetPassword);
