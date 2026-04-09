@@ -33,7 +33,7 @@ process.env.JWT_SECRET,
 );
 res.json({
 message: "Login successful",
-token: token,
+token,
 employee
 });
 
